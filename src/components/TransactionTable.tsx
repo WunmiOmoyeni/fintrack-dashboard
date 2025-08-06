@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import { Transaction } from "@/types";
 
 interface Props {
   transactions: Transaction[];
 }
 
-type SortField = 'date' | 'remark' | 'amount' | 'type';
-type SortDirection = 'asc' | 'desc';
+type SortField = "date" | "remark" | "amount" | "type";
+type SortDirection = "asc" | "desc";
 
 const TransactionTable = ({ transactions }: Props) => {
-  const [sortField, setSortField] = useState<SortField>('date');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [sortField, setSortField] = useState<SortField>("date");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
   const handleSort = (field: SortField) => {
     if (field === sortField) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      setSortDirection('asc');
+      setSortDirection("asc");
     }
   };
 
@@ -28,19 +28,19 @@ const TransactionTable = ({ transactions }: Props) => {
     let bValue: string | number;
 
     switch (sortField) {
-      case 'date':
+      case "date":
         aValue = new Date(a.date).getTime();
         bValue = new Date(b.date).getTime();
         break;
-      case 'amount':
+      case "amount":
         aValue = a.amount;
         bValue = b.amount;
         break;
-      case 'remark':
+      case "remark":
         aValue = a.remark.toLowerCase();
         bValue = b.remark.toLowerCase();
         break;
-      case 'type':
+      case "type":
         aValue = a.type;
         bValue = b.type;
         break;
@@ -50,24 +50,26 @@ const TransactionTable = ({ transactions }: Props) => {
     }
 
     if (aValue < bValue) {
-      return sortDirection === 'asc' ? -1 : 1;
+      return sortDirection === "asc" ? -1 : 1;
     }
     if (aValue > bValue) {
-      return sortDirection === 'asc' ? 1 : -1;
+      return sortDirection === "asc" ? 1 : -1;
     }
     return 0;
   });
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
+ const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
 
   const formatAmount = (amount: number, type: string) => {
-    const sign = type === 'Debit' ? '-' : '';
+    const sign = type === "Debit" ? "-" : "";
     return `${sign}$${amount.toLocaleString()}`;
   };
 
@@ -77,7 +79,7 @@ const TransactionTable = ({ transactions }: Props) => {
     }
     return (
       <span className="text-blue-600">
-        {sortDirection === 'asc' ? '↑' : '↓'}
+        {sortDirection === "asc" ? "↑" : "↓"}
       </span>
     );
   };
@@ -87,32 +89,32 @@ const TransactionTable = ({ transactions }: Props) => {
       <div className="px-6 py-4 border-b border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900">Transactions</h2>
       </div>
-      
+
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th 
+              <th
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSort('date')}
+                onClick={() => handleSort("date")}
               >
                 <div className="flex items-center space-x-1">
                   <span>Date</span>
                   <SortIcon field="date" />
                 </div>
               </th>
-              <th 
+              <th
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSort('remark')}
+                onClick={() => handleSort("remark")}
               >
                 <div className="flex items-center space-x-1">
                   <span>Remark</span>
                   <SortIcon field="remark" />
                 </div>
               </th>
-              <th 
+              <th
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSort('amount')}
+                onClick={() => handleSort("amount")}
               >
                 <div className="flex items-center space-x-1">
                   <span>Amount</span>
@@ -122,9 +124,9 @@ const TransactionTable = ({ transactions }: Props) => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Currency
               </th>
-              <th 
+              <th
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSort('type')}
+                onClick={() => handleSort("type")}
               >
                 <div className="flex items-center space-x-1">
                   <span>Type</span>
@@ -143,19 +145,24 @@ const TransactionTable = ({ transactions }: Props) => {
                   {transaction.remark}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <span className={transaction.type === 'Credit' ? 'text-green-600' : 'text-red-600'}>
+                
                     {formatAmount(transaction.amount, transaction.type)}
-                  </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
                   {transaction.currency}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  <div className="flex items-center space-x-2">
-                    <div className={`w-2 h-2 rounded-full ${
-                      transaction.type === 'Credit' ? 'bg-green-500' : 'bg-red-500'
-                    }`}></div>
-                    <span>{transaction.type}</span>
+                  <div className="flex items-center space-x-2 px-2 py-1 rounded-full bg-gray-100 border border-gray-300 w-fit">
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        transaction.type === "Credit"
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      }`}
+                    ></div>
+                    <span className="text-sm font-medium text-[#1B2528]">
+                      {transaction.type}
+                    </span>
                   </div>
                 </td>
               </tr>

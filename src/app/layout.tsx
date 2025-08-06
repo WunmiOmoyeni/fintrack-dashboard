@@ -2,6 +2,12 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 
+export const metadata = {
+  title: "Fintrack",
+  icons: {
+    icon: "/logomark.png",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -22,5 +28,5 @@ export default function RootLayout({
         </div>
       </body>
     </html>
-  )
+  );
 }

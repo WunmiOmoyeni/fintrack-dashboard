@@ -1,4 +1,5 @@
 import { DashboardSummary } from "@/types";
+import { MoreHorizontal } from "lucide-react";
 
 interface Props {
   title: string;
@@ -16,15 +17,25 @@ const SummaryCard = ({ title, value, change, isMonetary = true }: Props) => {
   };
 
   const formatChange = (changeVal: number) => {
-    const sign = changeVal >= 0 ? '+' : '';
+    const sign = changeVal >= 0 ? "+" : "";
     return `${sign}${changeVal.toFixed(1)}%`;
   };
 
   return (
-    <div className="rounded-xl shadow p-4 bg-white">
-      <h3 className="text-sm text-gray-500">{title}</h3>
-      <p className="text-xl font-bold">{formatValue(value)}</p>
-      <p className={`text-sm ${change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+    <div className="rounded-xl shadow p-4 bg-gray-100 h-[150px] flex-col items-center">
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="text-xl font-semibold text-[#1B2528]">{title}</h3>
+        <MoreHorizontal className="text-gray-600 cursor-pointer" />
+      </div>
+
+      <p className="font-bold text-[34px] text-[#1B2528] mb-1">
+        {formatValue(value)}
+      </p>
+      <p
+        className={`text-sm ${
+          change >= 0 ? "text-[#3E7383]" : "text-[#C6381B]"
+        } text-[13px]`}
+      >
         {formatChange(change)}
       </p>
     </div>
@@ -39,25 +50,25 @@ interface DashboardProps {
 const Dashboard = ({ summary }: DashboardProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <SummaryCard 
-        title="Total Balance" 
-        value={summary.totalBalance} 
-        change={summary.balanceChange} 
+      <SummaryCard
+        title="Total Balance"
+        value={summary.totalBalance}
+        change={summary.balanceChange}
       />
-      <SummaryCard 
-        title="Total Credits" 
-        value={summary.totalCredits} 
-        change={summary.creditsChange} 
+      <SummaryCard
+        title="Total Credits"
+        value={summary.totalCredits}
+        change={summary.creditsChange}
       />
-      <SummaryCard 
-        title="Total Debits" 
-        value={summary.totalDebits} 
-        change={summary.debitsChange} 
+      <SummaryCard
+        title="Total Debits"
+        value={summary.totalDebits}
+        change={summary.debitsChange}
       />
-      <SummaryCard 
-        title="Transactions" 
-        value={summary.transactionCount} 
-        change={summary.transactionChange} 
+      <SummaryCard
+        title="Transactions"
+        value={summary.transactionCount}
+        change={summary.transactionChange}
         isMonetary={false}
       />
     </div>
