@@ -1,9 +1,7 @@
 // components/Topbar.tsx
 
 import React from "react";
-import { Share, MoreHorizontal } from "lucide-react";
-import icon from "@/images/icon.png";
-import Image from "next/image";
+import { Share, MoreHorizontal, ChevronDown } from "lucide-react";
 import UserAvatarGroup from "./UserAvatarGroup";
 
 interface User {
@@ -36,7 +34,7 @@ const Topbar: React.FC<TopbarProps> = ({
 
             {/* Icons */}
             <div className="flex space-x-1">
-              <Image src={icon} alt="icon" />
+           <ChevronDown/>
             </div>
 
             {/* Status Badge */}
