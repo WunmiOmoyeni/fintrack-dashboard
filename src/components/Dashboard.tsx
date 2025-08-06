@@ -50,7 +50,7 @@ export default function DashboardPage() {
 
       {/* 🔵 Dashboard Content */}
       <section id="overview">
-        <h1 className="text-2xl font-semibold">Summary</h1>
+        <h1 className="text-[20px] font-[publicSans-Bold]">Summary</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           <SummaryCard

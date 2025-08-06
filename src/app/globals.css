@@ -1,3 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: publicSans-Bold;
+  src: url(../fonts/PublicSans-Bold.ttf);
+}
 
+@font-face {
+  font-family: publicSans-Medium;
+  src: url(../fonts/PublicSans-Medium.ttf);
+}
+
+@font-face {
+  font-family: publicSans-Semibold;
+  src: url(../fonts/PublicSans-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: publicSans-Regular;
+  src: url(../fonts/PublicSans-Regular.ttf);
+}

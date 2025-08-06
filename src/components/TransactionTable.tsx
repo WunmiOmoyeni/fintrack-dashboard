@@ -58,15 +58,14 @@ const TransactionTable = ({ transactions }: Props) => {
     return 0;
   });
 
- const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is zero-based
-  const day = String(date.getDate()).padStart(2, "0");
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${day}`;
-};
-
+    return `${year}-${month}-${day}`;
+  };
 
   const formatAmount = (amount: number, type: string) => {
     const sign = type === "Debit" ? "-" : "";
@@ -86,50 +85,51 @@ const TransactionTable = ({ transactions }: Props) => {
 
   return (
     <div className="bg-white rounded-xl shadow overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-900">Transactions</h2>
-      </div>
-
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider cursor-pointer hover:bg-gray-100 w-1/3"
                 onClick={() => handleSort("date")}
               >
                 <div className="flex items-center space-x-1">
-                  <span>Date</span>
+                  <span className="font-[publicSans-Medium] text-[13px] ">Date</span>
                   <SortIcon field="date" />
                 </div>
               </th>
+              
+              {/* Spacer column to push other columns to the right */}
+              <th className="w-1/6"></th>
+              
+              {/* Right-aligned columns bunched together */}
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 tracking-wider cursor-pointer hover:bg-gray-100 w-1/6"
                 onClick={() => handleSort("remark")}
               >
                 <div className="flex items-center space-x-1">
-                  <span>Remark</span>
+                  <span className=" font-[publicSans-Medium] text-[13px] capitalize">Remark</span>
                   <SortIcon field="remark" />
                 </div>
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 tracking-wider cursor-pointer hover:bg-gray-100 w-1/6"
                 onClick={() => handleSort("amount")}
               >
                 <div className="flex items-center space-x-1">
-                  <span>Amount</span>
+                  <span className=" font-[publicSans-Medium] text-[13px] capitalize">Amount</span>
                   <SortIcon field="amount" />
                 </div>
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 e tracking-wider w-1/12  font-[publicSans-Medium] text-[13px] ">
                 Currency
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 tracking-wider cursor-pointer hover:bg-gray-100 w-1/6"
                 onClick={() => handleSort("type")}
               >
                 <div className="flex items-center space-x-1">
-                  <span>Type</span>
+                  <span className=" font-[publicSans-Medium] text-[13px]">Type</span>
                   <SortIcon field="type" />
                 </div>
               </th>
@@ -138,20 +138,27 @@ const TransactionTable = ({ transactions }: Props) => {
           <tbody className="bg-white divide-y divide-gray-200">
             {sortedTransactions.map((transaction) => (
               <tr key={transaction.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                {/* Date cell */}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-[publicSans-Regular] text-[15px]">
                   {formatDate(transaction.date)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                
+                {/* Empty spacer cell */}
+                <td className="px-3 py-4"></td>
+                
+                {/* Right-aligned cells */}
+                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900 font-[publicSans-Regular] text-[15px]">
                   {transaction.remark}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                
+                <td className="px-3 py-4 whitespace-nowrap text-sm font-[publicSans-Regular] text-[15px]">
+                  <span>
                     {formatAmount(transaction.amount, transaction.type)}
+                  </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                <td className="px-3 py-4 whitespace-nowrap text-sm text-[#1B2528] font-[publicSans-Regular] text-[15px]">
                   {transaction.currency}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="flex items-center space-x-2 px-2 py-1 rounded-full bg-gray-100 border border-gray-300 w-fit">
                     <div
                       className={`w-2 h-2 rounded-full ${
@@ -160,7 +167,7 @@ const TransactionTable = ({ transactions }: Props) => {
                           : "bg-red-500"
                       }`}
                     ></div>
-                    <span className="text-sm font-medium text-[#1B2528]">
+                    <span className="text-sm font-medium text-[#1B2528] font-[publicSans-Regular] text-[15px]">
                       {transaction.type}
                     </span>
                   </div>

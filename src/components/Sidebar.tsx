@@ -23,7 +23,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-[300px] bg-white h-screen py-4 px-12 hidden md:block">
+    <aside className="w-[300px] h-screen mt-10 py-4 px-12 hidden md:block font-[publicSans-Medium] font-[15px]">
       <nav className="space-y-2">
         {navItems.map((item) => (
           <Link

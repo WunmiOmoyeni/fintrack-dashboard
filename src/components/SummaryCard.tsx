@@ -24,17 +24,17 @@ const SummaryCard = ({ title, value, change, isMonetary = true }: Props) => {
   return (
     <div className="rounded-[35px] shadow p-4 bg-gray-100 h-[150px] flex-col items-center">
       <div className="flex justify-between items-start mb-2">
-        <h3 className="text-xl font-semibold text-[#1B2528]">{title}</h3>
+        <h3 className="text-[17px] font-[publicSans-Bold] text-[#1B2528]">{title}</h3>
         <MoreHorizontal className="text-gray-600 cursor-pointer" />
       </div>
 
-      <p className="font-bold text-[34px] text-[#1B2528] mb-1">
+      <p className="font-[publicSans-Bold] text-[20px] md:text-[34px] text-[#1B2528] mb-1">
         {formatValue(value)}
       </p>
       <p
         className={`text-sm ${
           change >= 0 ? "text-[#3E7383]" : "text-[#C6381B]"
-        } text-[13px]`}
+        } font-[publicSans-Medium] text-[13px]`}
       >
         {formatChange(change)}
       </p>
