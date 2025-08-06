@@ -22,7 +22,7 @@ const SummaryCard = ({ title, value, change, isMonetary = true }: Props) => {
   };
 
   return (
-    <div className="rounded-xl shadow p-4 bg-gray-100 h-[150px] flex-col items-center">
+    <div className="rounded-[35px] shadow p-4 bg-gray-100 h-[150px] flex-col items-center">
       <div className="flex justify-between items-start mb-2">
         <h3 className="text-xl font-semibold text-[#1B2528]">{title}</h3>
         <MoreHorizontal className="text-gray-600 cursor-pointer" />
